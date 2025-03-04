@@ -1,0 +1,42 @@
+#Import numpy to work with numbers and lists to numbers easily.
+import numpy as np
+
+#Import pyplot from matplotlib to help us draw graphs and pictures.
+import matplotlib.pyplot as plt
+
+#Import fits from astropy.io to open and use special space picture files called FITS.
+from astropy.io import fits
+
+#Import download_file from astropy.utils.data to grab data from the internet without leaving our code.
+from astropy.utils.data import download_file
+
+#Import LogStretch and PowerStretch from astropy.visualiaztion to make out space pictures look clearer.
+from astropy.visualization import LogStretch, PowerStretch
+
+#Import ImageNormalized from astropy.visualization to help make sure our  pictures show up nicely in our graphs.
+from astropy.visualization.mpl_normalize import ImageNormalize
+
+# Use this function to download a space image stored in a FITS file
+image_file = download_file('https://fits.gsfc.nasa.gov/samples/IUElwp25637mxlo.fits', cache=True)
+
+image_data = fits.getdata(image_file)
+
+header = fits.getheader(image_file)
+print(header)
+
+import pprint #"pretty print" moduke
+header = fits.getheader(image_file)
+pprint.pprint(header)
+
+plt.imshow(image_data, cmap='gray')
+plt.show()
+
+print('Min:', np.min(image_data))
+print('Max:', np.max(image_data))
+print('Mean:', np.mean(image_data))
+print('Stdev:', np.std(image_data))
+
+plt.figure(figize=(10,10)) # set the size pf the image
+plt.imshow(image_data, cmap='cividis')
+plt.colorbar()
+plt.show()
